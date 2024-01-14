@@ -4,12 +4,16 @@ import Signin from "./assets/page/Signin";
 import SignUp from "./assets/page/SignUp";
 import DefaultPage from "./assets/page/DefaultPage";
 import Video from "./assets/page/Video";
+import { useEffect, useState } from "react";
+import Search from "./assets/page/Search";
 
-function App() {
-  // const {id} = useParams();
+function App() { 
+
   const id = useLocation();
+ 
 
   return (
+
     <>
       <Routes>
         <Route path="/" element={<DefaultPage />} />
@@ -17,6 +21,7 @@ function App() {
         <Route path="/signIn" element={<Signin />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/video/:id" element={<Video />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </>
   );

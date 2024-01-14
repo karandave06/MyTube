@@ -1,13 +1,28 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import { Info } from "@mui/icons-material";
+import noImage from "../../public/images/no-image.jpg";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { format } from "timeago.js";
 
 const Card = ({ id, video }) => {
-  // console.log(video?.title)
+  const [channel, Setchannel] = useState();
+
+  useEffect(() => {
+    const fetchChannel = async () => {
+      const res = axios.get(
+        `http://localhost:8080/api/user/find/${video?.userId}`
+      );
+      Setchannel((await res).data);
+    };
+    fetchChannel();
+  }, [video?.userId]);
+
   return (
     <>
-      <div className="relative flex w-full  max-w-[26rem] h-[20rem]  flex-col rounded-xl bg-white md:my-7 bg-clip-border text-gray-700  ">
-        <Link to={`video/${id}`}>
+      <div className="relative flex w-full  max-w-[26rem] h-[21.5rem]  flex-col rounded-xl bg-white md:my-4 bg-clip-border text-gray-700  ">
+        <Link to={`/video/${id}`}>
           <div
             className="relative overflow-hidden
          text-white cursor-pointer transition-all delay-200   
@@ -23,15 +38,25 @@ const Card = ({ id, video }) => {
           </div>
         </Link>
 
-        <div className="flex gap-2 justify-between w-full h-[3rem] p-2 flex-[0.2]">
-          <div className="w-[20%]">
-            <div className="text-center flex items-center justify-center bg-black h-[2rem] w-[2rem] rounded-full">
-              <h1>k</h1>
+        <div className="flex justify-between w-full   p-2 py-0 flex-[0.2]">
+          <div className="w-[10%] pt-2">
+            <div className="text-center flex items-center  justify-center bg-black h-8 w-8 rounded-full">
+              <img
+                src={channel?.img ? channel?.img : noImage}
+                alt="profile image"
+                className="w-full h-full object-cover rounded-full"
+              />
             </div>
           </div>
-          <div className="flex flex-col gap-3 h-full w-[80%]">
-            <p>{video?.title}</p>
-            <p>Chennal Name</p>
+
+          <div className="flex flex-col   h-[4.5rem]   w-[90%]">
+            <p className="line-clamp-1">{video?.desc}</p>
+            <p className="line-clamp-1">{channel?.name}</p>
+
+            <div className="flex gap-1">
+              <h1>{video?.videoViews} views </h1>
+              <h1>{format(video?.createdAt)}</h1>
+            </div>
           </div>
         </div>
       </div>

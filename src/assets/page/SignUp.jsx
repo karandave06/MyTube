@@ -1,11 +1,32 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import google from "../../../public/images/google.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+ 
+import axios from "axios";
 
 const SignUp = () => {
+  const navigate = useNavigate(); 
+
   const { register, handleSubmit } = useForm();
-  const onSubmint = (data) => console.log(data);
+
+  const onSubmit = (data) => {
+    // data.preventDefault();
+  
+    axios
+      .post(`${import.meta.env.VITE_SOME_KEY}/auth/signup`, {
+        email: data.email,
+        name: data.name,
+        password: data.password,
+      })
+      .then((res) => {
+        if (res.status == 200) {
+        
+          // navigate("/signin");
+        }
+      })
+      .catch((error) => {console.log(error)});
+  };
   return (
     <>
       <div className="w-[100%] h-[100vh] flex justify-center items-center md:p-0 p-5">
@@ -25,14 +46,15 @@ const SignUp = () => {
           </div>
 
           <form
-            onSubmit={handleSubmit(onSubmint)}
-            className="flex flex-col gap-5 "
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-5"
           >
             {/* input field 1 */}
             <div className="relative flex items-center justify-center">
               <input
                 type="text"
                 id="Name"
+                {...register("name")}
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm
                  text-gray-900 bg-transparent border-[1px] border-gray-600
                   rounded-lg border-1  appearance-none dark:text-white dark:border-gray-600
@@ -55,7 +77,7 @@ const SignUp = () => {
             <div className="relative flex items-center justify-center">
               <input
                 type="text"
-                {...register("password")}
+                {...register("email")}
                 id="Email"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm
                  text-gray-900 bg-transparent border-[1px] border-gray-600

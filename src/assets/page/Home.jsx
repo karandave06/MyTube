@@ -23,20 +23,31 @@ const [view,setview] = useState();
 useEffect(() =>{
  if (id === "suscription") {
   setview(<Suscription />)
- }
-
-
- console.log('hello i am call again')
+ } 
 },[id])
 
- 
+const [loading, setloading] = useState(false);
+useEffect(() => {
+  setloading(true);
+
+  setTimeout(() => {
+    setloading(false);
+  }, 3000);
+}, []);
 
  
   return (
     <>
+   {
+    
+     <> 
       <Navbar /> 
        <Sidebar />
        {view}
+
+     </>
+    
+    }
     </>
   )
 }

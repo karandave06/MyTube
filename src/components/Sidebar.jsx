@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { IoIosHome } from "react-icons/io";
-import { SiYoutubeshorts } from "react-icons/si";
 import { MdSubscriptions } from "react-icons/md";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdExplore } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { Drawer } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleState } from "../Redux/action.js";
+// import { toggleState } from "../Redux/action.js";
+import { toggleState } from "../Redux/SidebarSlice.js";
 import { RxHamburgerMenu } from "react-icons/rx";
 import logo from "../../public/images/youtube-favicon.png";
+
 const Sidebar = () => {
+  // const token = localStorage.getItem("token");
+  const token = useSelector((state) => state.user.current);
   const dispatch = useDispatch();
 
   const handleToggles = () => {
@@ -53,7 +56,8 @@ const Sidebar = () => {
       name: "Suscription",
     },
   ];
-  const isToggled = useSelector((state) => state.isToggled);
+
+  const isToggled = useSelector((state) => state.sidebar.value);
 
   const SidebarTitle = () => {
     return (
@@ -110,17 +114,11 @@ const Sidebar = () => {
             ))}
           </div>
 
-          {/* border part */}
-
-          <div className=" flex flex-col items-center justify-center   gap-5 w-[12rem] ">
-            <div className="border-t-2  border-gray-300 h-2 w-[12rem] text-white ">
-              -
-            </div>
-          </div>
+          <Border />
 
           {/* sign part */}
 
-          {
+          {!token && (
             <div className=" flex flex-col gap-5 w-[12rem]   ">
               <div>
                 <h1 className="text-gray-500">
@@ -144,15 +142,7 @@ const Sidebar = () => {
                 </Link>
               </div>
             </div>
-          }
-
-          {/* border part */}
-
-          <div className=" flex flex-col items-center justify-center   gap-5 w-[12rem] ">
-            <div className="border-t-2   border-gray-300 h-2 w-full text-white ">
-              -
-            </div>
-          </div>
+          )}
         </div>
       </Drawer>
 
@@ -170,6 +160,16 @@ const Sidebar = () => {
         {/* border part */}
       </div>
     </>
+  );
+};
+
+const Border = () => {
+  return (
+    <div className=" flex flex-col items-center justify-center   gap-5 w-[12rem] ">
+      <div className="border-t-2   border-gray-300 h-2 w-full text-white ">
+        -
+      </div>
+    </div>
   );
 };
 

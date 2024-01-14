@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import logo from "/images/youtube-favicon.png";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 import { CgProfile } from "react-icons/cg";
 import { MdVideoCall } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { toggleState } from "../Redux/action.js";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleState } from "../Redux/SidebarSlice.js";
+import { popState } from "../Redux/VideoPopup.js";
 import { CiSearch } from "react-icons/ci";
+import AvatarDropdown from "./AvatarDropdown.jsx";
+import Upload from "./Upload.jsx";
+import axios from "axios";
 
 export const BeforeSign = () => {
   return (
@@ -31,31 +35,39 @@ export const BeforeSign = () => {
 };
 
 const AftereSign = () => {
+  const dispatch = useDispatch();
+
+  const handleToggle = () => {
+    dispatch(popState()); 
+  };
   return (
     <>
       <div className="flex items-center gap-5 justify-center text-center">
         <div
-          className="rounded-full  p-2 w-10 h-10  bg-transparent
-flex items-center justify-center
- hover:bg-gray-200 text-3xl cursor-pointer"
+          onClick={handleToggle}
+          className="rounded-full p-2 w-10 h-10  bg-transparent hover:bg-gray-200 text-3xl cursor-pointer"
         >
           <MdVideoCall />
         </div>
 
-        <div
-          className="rounded-full p-2  text-center bg-red-600
-text-white
-flex items-center justify-center w-8 h-8
-  text-xl  "
-        >
-          <h1 className="text-center font-bold">k</h1>
-        </div>
+        <AvatarDropdown />
       </div>
     </>
   );
 };
 
 const Navbar = () => {
+  
+
+
+ 
+
+ 
+  const token = useSelector((state) => state.user.current);
+  const VideoPopup = useSelector((state) => state.popupVideo.Popupvalue)
+
+  console.log(VideoPopup,64)
+
   const dispatch = useDispatch();
 
   const handleToggle = () => {
@@ -96,9 +108,10 @@ const Navbar = () => {
           </div>
         </div>
         <div className="  flex items-center gap-2 justify-center md:flex-[0.2] flex-[0.1]  px-2 py-1">
-          <BeforeSign />
-          {/* <AftereSign /> */}
+          {token != null ? <AftereSign /> : <BeforeSign />}
         </div>
+
+        {VideoPopup && <Upload />}
       </div>
 
       {/* Responsive Navbar */}
@@ -135,8 +148,12 @@ const Navbar = () => {
 
         <div className="w-[33%] flex items-center gap-3 px-2 justify-end text-end  py-1">
           <CiSearch />
+          <AvatarDropdown />
         </div>
       </div>
+
+        
+      
     </>
   );
 };
