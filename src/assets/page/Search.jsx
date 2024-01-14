@@ -9,7 +9,7 @@ import img from "../../../public/images/no-data-found.jpeg";
 const Search = () => {
   const quary = useLocation().search;
 
-  console.log(quary);
+   
 
   const [videoData, Setvideos] = useState("");
 
