@@ -76,6 +76,14 @@ const Upload = () => {
   const [videoUrl, setvideoUrl] = useState("");
   console.log(videoper, "videoper ");
   console.log(imageper, "imageper ");
+
+
+
+
+
+
+
+  
   const handleChange = (e) => {
     console.log("cliking is continue");
   };
@@ -85,7 +93,7 @@ const Upload = () => {
   const onSubmit = async (data) => {
      
 
- await axios.post("http://localhost:8080/api/video",{
+ await axios.post(`${import.meta.env.VITE_SOME_KEY}/video`,{
   token:UserId.other._id,
   imgUrl:imgUrl,
   videoUrl:videoUrl,
