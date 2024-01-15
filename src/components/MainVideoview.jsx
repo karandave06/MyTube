@@ -18,7 +18,8 @@ import { useForm } from "react-hook-form";
 import { RxAvatar } from "react-icons/rx";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
-import { Media, Video } from "@vidstack/player-react";
+import ReactPlayer from 'react-player'
+// import { Media, Video } from "@vidstack/player-react";
 
 const MainVideoview = () => {
   const { register, handleSubmit, resetField } = useForm();
@@ -95,7 +96,7 @@ const MainVideoview = () => {
         const videoRes = await axios.get(
           `${import.meta.env.VITE_SOME_KEY}/video/find/${path}`
         );
-
+console.log(videoRes.data)
         const userRes = await axios.get(
           `${import.meta.env.VITE_SOME_KEY}/user/find/${videoRes.data.userId}`
         );
@@ -103,8 +104,7 @@ const MainVideoview = () => {
         setchannel(userRes.data);
         dispatch(fetchSuscess(videoRes.data));
         setvideoUrl(videoRes.data.videoUrl);
-        setimageUrl(videoRes.data.imgUrl);
-        // console.log(videoRes.data?.img)
+        setimageUrl(videoRes.data.imgUrl); 
       } catch (error) {
         console.log(error);
       }
@@ -131,18 +131,20 @@ const MainVideoview = () => {
               <source src={videoUrl} />
             </Player> */}
 
-            <Media>
+            
+
+            {/* <Media>
               <Video
                 loading="visible"
-                // poster="https://media-files.vidstack.io/poster.png"
+ 
                 poster={`${imageUrl ? imageUrl : "https://static.vecteezy.com/system/resources/thumbnails/004/844/749/original/icon-loading-round-gradient-angle-loop-out-animation-with-dark-background-gradient-line-style-for-game-animation-and-others-free-video.jpg"}`} 
-                // className="w-full h-[28rem]"
+                 
                 controls
                 preload="true"
               >
                 <video
                   loading="visible"
-                  // poster="https://media-files.vidstack.io/poster.png"
+                 
                   poster={`${imageUrl ? imageUrl : "https://static.vecteezy.com/system/resources/thumbnails/004/844/749/original/icon-loading-round-gradient-angle-loop-out-animation-with-dark-background-gradient-line-style-for-game-animation-and-others-free-video.jpg"}`} 
                   src={videoUrl}
                   autoPlay
@@ -151,7 +153,7 @@ const MainVideoview = () => {
                   controls
                 />
               </Video>
-            </Media>
+            </Media> */}
 
             <div className="flex flex-col md:gap-3 gap-5 items-start">
               <div className="flex  gap-2">
