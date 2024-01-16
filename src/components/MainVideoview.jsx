@@ -26,23 +26,23 @@ const MainVideoview = () => {
   const currentVideo = useSelector((state) => state.video.currentVideo);
   const onSubmit = async () => {
     await axios
-    //   .post(`${import.meta.env.VITE_SOME_KEY}/comment`, {
-    //     desc: comment,
-    //     videoId: currentVideo?._id,
-    //     userId: currentUser.other._id,
-    //   })
-    //   .then((res) => {
-    //     setcomment(""), resetField("comment");
-    //     setshowComment(true);
-    //   })
-    //   .catch((err) => console.log(err));
+      .post(`${import.meta.env.VITE_SOME_KEY}/comment`, {
+        desc: comment,
+        videoId: currentVideo?._id,
+        userId: currentUser.other._id,
+      })
+      .then((res) => {
+        setcomment(""), resetField("comment");
+        setshowComment(true);
+      })
+      .catch((err) => console.log(err));
 
-    // await axios
-    //   .get(`${import.meta.env.VITE_SOME_KEY}/comment/${currentVideo?._id}`)
-    //   .then((res) => {
-    //     setdescComment(res.data);
-    //   })
-    //   .catch((err) => console.log(err));
+    await axios
+      .get(`${import.meta.env.VITE_SOME_KEY}/comment/${currentVideo?._id}`)
+      .then((res) => {
+        setdescComment(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   
@@ -57,71 +57,71 @@ const MainVideoview = () => {
   const path = useLocation().pathname.split("/")[2];
 
   const handleLike = async () => {
-    // await axios.put(
-    //   `${import.meta.env.VITE_SOME_KEY}/user/like2/${currentVideo?._id}`,
-    //   {
-    //     token: currentUser.other._id,
-    //   }
-    // );
-    // dispatch(like(currentUser.other._id));
+    await axios.put(
+      `${import.meta.env.VITE_SOME_KEY}/user/like2/${currentVideo?._id}`,
+      {
+        token: currentUser.other._id,
+      }
+    );
+    dispatch(like(currentUser.other._id));
   };
 
   const handleDislike = async () => {
-    // await axios.put(
-    //   `${import.meta.env.VITE_SOME_KEY}/user/dislike2/${currentVideo?._id}`,
-    //   {
-    //     token: currentUser.other._id,
-    //   }
-    // );
-    // dispatch(dislike(currentUser.other._id));
+    await axios.put(
+      `${import.meta.env.VITE_SOME_KEY}/user/dislike2/${currentVideo?._id}`,
+      {
+        token: currentUser.other._id,
+      }
+    );
+    dispatch(dislike(currentUser.other._id));
   };
 
   const handleSuscribe = async () => {
-    // currentUser.suscribedUsers?.includes(channel._id)
-    //   ? await axios.put(`${import.meta.env.VITE_SOME_KEY}/user/unsub/${channel._id}`, {
-    //       token: currentUser.other._id,
-    //     })
-    //   : await axios.put(`${import.meta.env.VITE_SOME_KEY}/user/sub/${channel._id}`, {
-    //       token: currentUser.other._id,
-    //     });
-    // dispatch(suscribPtion(channel._id));
+    currentUser.suscribedUsers?.includes(channel._id)
+      ? await axios.put(`${import.meta.env.VITE_SOME_KEY}/user/unsub/${channel._id}`, {
+          token: currentUser.other._id,
+        })
+      : await axios.put(`${import.meta.env.VITE_SOME_KEY}/user/sub/${channel._id}`, {
+          token: currentUser.other._id,
+        });
+    dispatch(suscribPtion(channel._id));
   };
 
   const [videoUrl, setvideoUrl] = useState("");
   const [imageUrl, setimageUrl] = useState("");
 
-//   useEffect(() => {
-//     const getData = async () => {
-//       try {
-//         const videoRes = await axios.get(
-//           `${import.meta.env.VITE_SOME_KEY}/video/find/${path}`
-//         );
-// console.log(videoRes.data)
-//         const userRes = await axios.get(
-//           `${import.meta.env.VITE_SOME_KEY}/user/find/${videoRes.data.userId}`
-//         );
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const videoRes = await axios.get(
+          `${import.meta.env.VITE_SOME_KEY}/video/find/${path}`
+        );
+console.log(videoRes.data)
+        const userRes = await axios.get(
+          `${import.meta.env.VITE_SOME_KEY}/user/find/${videoRes.data.userId}`
+        );
 
-//         setchannel(userRes.data);
-//         dispatch(fetchSuscess(videoRes.data));
-//         setvideoUrl(videoRes.data.videoUrl);
-//         setimageUrl(videoRes.data.imgUrl); 
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     };
-//     getData();
-//   }, []);
+        setchannel(userRes.data);
+        dispatch(fetchSuscess(videoRes.data));
+        setvideoUrl(videoRes.data.videoUrl);
+        setimageUrl(videoRes.data.imgUrl); 
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${import.meta.env.VITE_SOME_KEY}/comment/${currentVideo?._id}`)
-  //     .then((res) => {
-  //       setdescComment(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [currentVideo?._id]); 
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_SOME_KEY}/comment/${currentVideo?._id}`)
+      .then((res) => {
+        setdescComment(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [currentVideo?._id]); 
 
-  // console.log(imageUrl)
+  console.log(imageUrl)
   return (
     <>
       <div className="md:w-[calc(100%-4rem)] w-full grid  py-5 md:grid-cols-2 grid-cols-1  gap-5 p-4 ml-auto  h-full">
@@ -146,8 +146,8 @@ const MainVideoview = () => {
                   loading="visible"
                  
                   poster={`${imageUrl ? imageUrl : "https://static.vecteezy.com/system/resources/thumbnails/004/844/749/original/icon-loading-round-gradient-angle-loop-out-animation-with-dark-background-gradient-line-style-for-game-animation-and-others-free-video.jpg"}`} 
-                  //src={videoUrl}
-                  src={video}
+                  src={videoUrl}
+                  // src={video}
                   autoPlay
                   preload="none"
                   data-video="0"
