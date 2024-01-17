@@ -22,7 +22,7 @@ const Recomandation = ({ tags }) => {
       {video &&
         video?.map((data) => (
           <SideVideo
-            key={data?.id}
+            key={data?._id}
             image={data?.imgUrl}
             videoTitle={data?.title}
             ChennalName={"Chennal name is going to hear"}
