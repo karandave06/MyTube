@@ -29,7 +29,7 @@ const MainVideoview = () => {
       .post(`${import.meta.env.VITE_SOME_KEY}/comment`, {
         desc: comment,
         videoId: currentVideo?._id,
-        userId: currentUser.other._id,
+        userId: currentUser?.other._id,
       })
       .then((res) => {
         setcomment(""), resetField("comment");
@@ -60,29 +60,29 @@ const MainVideoview = () => {
     await axios.put(
       `${import.meta.env.VITE_SOME_KEY}/user/like2/${currentVideo?._id}`,
       {
-        token: currentUser.other._id,
+        token: currentUser?.other._id,
       }
     );
-    dispatch(like(currentUser.other._id));
+    dispatch(like(currentUser?.other._id));
   };
 
   const handleDislike = async () => {
     await axios.put(
       `${import.meta.env.VITE_SOME_KEY}/user/dislike2/${currentVideo?._id}`,
       {
-        token: currentUser.other._id,
+        token: currentUser?.other._id,
       }
     );
-    dispatch(dislike(currentUser.other._id));
+    dispatch(dislike(currentUser?.other._id));
   };
 
   const handleSuscribe = async () => {
     currentUser.suscribedUsers?.includes(channel._id)
       ? await axios.put(`${import.meta.env.VITE_SOME_KEY}/user/unsub/${channel._id}`, {
-          token: currentUser.other._id,
+          token: currentUser?.other._id,
         })
       : await axios.put(`${import.meta.env.VITE_SOME_KEY}/user/sub/${channel._id}`, {
-          token: currentUser.other._id,
+          token: currentUser?.other._id,
         });
     dispatch(suscribPtion(channel._id));
   };
@@ -184,7 +184,7 @@ console.log(videoRes.data)
                     onClick={handleLike}
                     className="flex w-10 h-10 items-center justify-center rounded-full hover:bg-gray-200 text-xl"
                   >
-                    {currentVideo?.likes?.includes(currentUser.other._id) ? (
+                    {currentVideo?.likes?.includes(currentUser?.other._id) ? (
                       <AiFillLike />
                     ) : (
                       <AiOutlineLike />

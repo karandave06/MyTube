@@ -38,14 +38,14 @@ const AftereSign = () => {
   const dispatch = useDispatch();
 
   const handleToggle = () => {
-    dispatch(popState()); 
+    dispatch(popState());
   };
   return (
     <>
       <div className="flex items-center gap-5 justify-center text-center">
         <div
           onClick={handleToggle}
-          className="rounded-full p-2 w-10 h-10  bg-transparent hover:bg-gray-200 text-3xl cursor-pointer"
+          className="rounded-full p-2 w-10 h-10 flex items-center justify-center  bg-transparent hover:bg-gray-200 text-3xl cursor-pointer"
         >
           <MdVideoCall />
         </div>
@@ -57,16 +57,10 @@ const AftereSign = () => {
 };
 
 const Navbar = () => {
-  
-
-
- 
-
- 
   const token = useSelector((state) => state.user.current);
-  const VideoPopup = useSelector((state) => state.popupVideo.Popupvalue)
+  const VideoPopup = useSelector((state) => state.popupVideo.Popupvalue);
 
-  console.log(VideoPopup,64)
+  console.log(VideoPopup, 64);
 
   const dispatch = useDispatch();
 
@@ -129,9 +123,9 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="w-[33%]  ">
+        <div className="md:w-[33%] w-full    ">
           <Link to={"/"}>
-            <div className="  flex items-center justify-center md:w-full w-[8rem] md:gap-1 gap-2">
+            <div className=" flex items-center justify-center w-full  gap-1  ">
               <div className="md:w-8 md:h-8 sm:w-4 sm:h-5 w-5 h-5 ">
                 <img
                   className="w-full h-full object-cover"
@@ -139,7 +133,7 @@ const Navbar = () => {
                   alt="Youtube_Logo"
                 />
               </div>
-              <h1 className="lg:text-[1.5rem] md:text-[1rem] text-[1.5rem]    font-bold">
+              <h1 className="lg:text-[1.5rem] md:text-[1rem] text-[1.4rem]    font-bold">
                 My Tube
               </h1>
             </div>
@@ -147,13 +141,10 @@ const Navbar = () => {
         </div>
 
         <div className="w-[33%] flex items-center gap-3 px-2 justify-end text-end  py-1">
-          <CiSearch className="text-xl"/>
+          <CiSearch className="text-xl" />
           <AvatarDropdown />
         </div>
       </div>
-
-        
-      
     </>
   );
 };

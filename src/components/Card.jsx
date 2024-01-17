@@ -35,7 +35,7 @@ const Card = ({ id, video }) => {
           bg-blue-gray-500 bg-clip-border w-full h-[17rem] flex-[0.8]"
           >
             <img
-              src={ imageLoad ? placeholder : video?.imgUrl}
+              src={imageLoad ? placeholder : video?.imgUrl}
               alt="ui/ux review check"
               className=" h-full w-full"
               onLoad={() => setimageLoad(false)}
@@ -58,7 +58,7 @@ const Card = ({ id, video }) => {
           </div>
         </Link>
 
-        <div className="flex justify-between w-full   p-2 py-0 flex-[0.2]">
+        <div className="flex justify-between w-full md:gap-2 gap-4   p-2 py-0 flex-[0.2]">
           <div className="w-[10%] pt-2">
             <div className="text-center flex items-center  justify-center bg-black h-8 w-8 rounded-full">
               <img
@@ -78,6 +78,7 @@ const Card = ({ id, video }) => {
               <h1>{format(video?.createdAt)}</h1>
             </div>
           </div>
+
         </div>
       </div>
     </>

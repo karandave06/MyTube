@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/UserSlice";
 import { Link } from "react-router-dom";
+import nomimage from "../../public/images/no-image.jpg";
 
 export default function AvatarDropdown() {
   const data = useSelector((state) => state.user.current);
@@ -14,6 +15,9 @@ export default function AvatarDropdown() {
     dispatch(logout());
     //  window.location.reload();
   };
+
+  console.log(data?.img);
+
   return (
     <div className="AvatarDropdown ">
       <Popover className="relative">
@@ -58,13 +62,22 @@ export default function AvatarDropdown() {
               <Popover.Panel className="absolute z-10 w-screen md:max-w-[260px] max-w-[200px] px-4 mt-3.5 md:-right-10 -right-5 sm:right- sm:px-0">
                 <div className="overflow-hidden rounded-3xl shadow-lg ring-1 ring-black ring-opacity-5">
                   <div
-                    className="relative md:grid grid-cols-1 flex items-center justify-center 
-                   bg-white dark:bg-neutral-800 md:py-7   md:px-6 p-4  "
+                    className={`relative md:grid grid-cols-1 flex flex-col ${ data ? "gap-5" : "gap-0"} items-start
+                     justify-center 
+                   bg-white dark:bg-neutral-800 md:py-7 md:gap-4  md:px-6 p-4  `}
                   >
                     {data ? (
                       <>
-                        <div className="flex items-center space-x-3">
-                          <div className="flex-grow">
+                        <div className="flex   items-center gap-3">
+                          <div className="w-8 h-8">
+                            {" "}
+                            <img
+                              className="w-full h-full object-cover"
+                              src={data?.img ? data?.img : nomimage}
+                              alt=""
+                            />
+                          </div>
+                          <div className="">
                             <h4 className="font-semibold">
                               {data?.other?.name}
                             </h4>
@@ -75,10 +88,13 @@ export default function AvatarDropdown() {
                       </>
                     ) : (
                       <>
-                      <Link to={'/signin'} className="w-full">
-                        <button className="p-1 w-full rounded-lg bg-gray-300 text-black">
-                          SignIn
-                        </button>
+                        <Link
+                          to={"/signin"}
+                          className="w-full flex h-full items-center justify-center"
+                        >
+                          <button className="p-1 w-full rounded-lg bg-gray-300 text-black">
+                            SignIn
+                          </button>
                         </Link>
                       </>
                     )}
