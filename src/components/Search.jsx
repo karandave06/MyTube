@@ -5,8 +5,16 @@ import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [q, setQ] = useState("");
-  const navigate = useNavigate()
-  const handleChange = (e) => {setQ(e)};
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setQ(e);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log();
+    navigate(`/search?q=${q}`);
+  };
 
   return (
     <div>
@@ -25,7 +33,11 @@ const Search = () => {
  w-[10%] p-[0.40rem] flex items-center justify-center
  border-l-0 bg-white border border-gray-400 hover:bg-gray-100   text-black h-auto"
           >
-            <CiSearch onClick={() => {navigate(`/search?q=${q}`)}}/>
+            <CiSearch
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+            />
           </div>
         </div>
       </form>

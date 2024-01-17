@@ -18,8 +18,9 @@ import { useForm } from "react-hook-form";
 import { RxAvatar } from "react-icons/rx";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
-import ReactPlayer from 'react-player'
+import ReactPlayer from "react-player";
 import { Media, Video } from "@vidstack/player-react";
+import Recomandation from "./Recomandation";
 
 const MainVideoview = () => {
   const { register, handleSubmit, resetField } = useForm();
@@ -45,7 +46,6 @@ const MainVideoview = () => {
       .catch((err) => console.log(err));
   };
 
-  
   const currentUser = useSelector((state) => state.user.current);
   const [commentLine, setcommentLine] = useState(false);
   const [showSubmint, setshowSubmint] = useState(false);
@@ -78,12 +78,18 @@ const MainVideoview = () => {
 
   const handleSuscribe = async () => {
     currentUser.suscribedUsers?.includes(channel._id)
-      ? await axios.put(`${import.meta.env.VITE_SOME_KEY}/user/unsub/${channel._id}`, {
-          token: currentUser?.other._id,
-        })
-      : await axios.put(`${import.meta.env.VITE_SOME_KEY}/user/sub/${channel._id}`, {
-          token: currentUser?.other._id,
-        });
+      ? await axios.put(
+          `${import.meta.env.VITE_SOME_KEY}/user/unsub/${channel._id}`,
+          {
+            token: currentUser?.other._id,
+          }
+        )
+      : await axios.put(
+          `${import.meta.env.VITE_SOME_KEY}/user/sub/${channel._id}`,
+          {
+            token: currentUser?.other._id,
+          }
+        );
     dispatch(suscribPtion(channel._id));
   };
 
@@ -96,7 +102,7 @@ const MainVideoview = () => {
         const videoRes = await axios.get(
           `${import.meta.env.VITE_SOME_KEY}/video/find/${path}`
         );
-console.log(videoRes.data)
+        console.log(videoRes.data);
         const userRes = await axios.get(
           `${import.meta.env.VITE_SOME_KEY}/user/find/${videoRes.data.userId}`
         );
@@ -104,7 +110,7 @@ console.log(videoRes.data)
         setchannel(userRes.data);
         dispatch(fetchSuscess(videoRes.data));
         setvideoUrl(videoRes.data.videoUrl);
-        setimageUrl(videoRes.data.imgUrl); 
+        setimageUrl(videoRes.data.imgUrl);
       } catch (error) {
         console.log(error);
       }
@@ -119,9 +125,9 @@ console.log(videoRes.data)
         setdescComment(res.data);
       })
       .catch((err) => console.log(err));
-  }, [currentVideo?._id]); 
+  }, [currentVideo?._id]);
 
-  console.log(imageUrl)
+  console.log(imageUrl);
   return (
     <>
       <div className="md:w-[calc(100%-4rem)] w-full grid  py-5 md:grid-cols-2 grid-cols-1  gap-5 p-4 ml-auto  h-full">
@@ -131,21 +137,24 @@ console.log(videoRes.data)
               <source src={videoUrl} />
             </Player> */}
 
-            
-
             <Media>
               <Video
                 loading="visible"
- 
-                poster={`${imageUrl ? imageUrl : "https://static.vecteezy.com/system/resources/thumbnails/004/844/749/original/icon-loading-round-gradient-angle-loop-out-animation-with-dark-background-gradient-line-style-for-game-animation-and-others-free-video.jpg"}`} 
-                 
+                poster={`${
+                  imageUrl
+                    ? imageUrl
+                    : "https://static.vecteezy.com/system/resources/thumbnails/004/844/749/original/icon-loading-round-gradient-angle-loop-out-animation-with-dark-background-gradient-line-style-for-game-animation-and-others-free-video.jpg"
+                }`}
                 controls
                 preload="true"
               >
                 <video
                   loading="visible"
-                 
-                  poster={`${imageUrl ? imageUrl : "https://static.vecteezy.com/system/resources/thumbnails/004/844/749/original/icon-loading-round-gradient-angle-loop-out-animation-with-dark-background-gradient-line-style-for-game-animation-and-others-free-video.jpg"}`} 
+                  poster={`${
+                    imageUrl
+                      ? imageUrl
+                      : "https://static.vecteezy.com/system/resources/thumbnails/004/844/749/original/icon-loading-round-gradient-angle-loop-out-animation-with-dark-background-gradient-line-style-for-game-animation-and-others-free-video.jpg"
+                  }`}
                   src={videoUrl}
                   // src={video}
                   autoPlay
@@ -312,47 +321,16 @@ console.log(videoRes.data)
         </div>
 
         <div className=" w-full grid-cols-1 gap-2 h-full">
-          <div className="w-full h-full flex flex-col gap-5">
+        <Recomandation tags={currentVideo?.tags} />
+          {/* <div className="w-full h-full flex flex-col gap-5">
             <SideVideo
               image={image}
               videoTitle={
                 " video name is hear Lorem, ipsum dolor sit amet consectetur  adipisicing elit. Repellat eos quo maiores?"
               }
               ChennalName={"Chennal name is going to hear"}
-            />
-
-            <SideVideo
-              image={image}
-              videoTitle={
-                " video name is hear Lorem, ipsum dolor sit amet consectetur  adipisicing elit. Repellat eos quo maiores?"
-              }
-              ChennalName={"Chennal name is going to hear"}
-            />
-
-            <SideVideo
-              image={image}
-              videoTitle={
-                " video name is hear Lorem, ipsum dolor sit amet consectetur  adipisicing elit. Repellat eos quo maiores?"
-              }
-              ChennalName={"Chennal name is going to hear"}
-            />
-
-            <SideVideo
-              image={image}
-              videoTitle={
-                " video name is hear Lorem, ipsum dolor sit amet consectetur  adipisicing elit. Repellat eos quo maiores?"
-              }
-              ChennalName={"Chennal name is going to hear"}
-            />
-
-            <SideVideo
-              image={image}
-              videoTitle={
-                " video name is hear Lorem, ipsum dolor sit amet consectetur  adipisicing elit. Repellat eos quo maiores?"
-              }
-              ChennalName={"Chennal name is going to hear"}
-            />
-          </div>
+            /> 
+          </div> */}
         </div>
       </div>
     </>

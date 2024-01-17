@@ -1,6 +1,6 @@
 import React from "react";
-
-const SideVideo = ({ image,videoTitle,ChennalName }) => {
+import { format } from "timeago.js";
+const SideVideo = ({ image,videoTitle,ChennalName,time }) => {
   return (
     <>
       <div className="w-full md:h-[7rem] h-[5rem] flex gap-4 md:rounded-xl rounded-sm ">
@@ -16,7 +16,7 @@ const SideVideo = ({ image,videoTitle,ChennalName }) => {
            {videoTitle}
           </h1>
           <h1 className="line-clamp-1">{ChennalName}</h1>
-          <h1 className="line-clamp-1">time</h1>
+          <h1 className="line-clamp-1">{format(time)}</h1>
         </div>
       </div>
     </>
