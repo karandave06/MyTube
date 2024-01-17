@@ -14,7 +14,6 @@ const Card = ({ id, video }) => {
   // useEffect(() => {
   //   setimageLoad(true);
   // }, []);
-  console.log(imageLoad, 17);
   useEffect(() => {
     const fetchChannel = async () => {
       const res = axios.get(
@@ -25,7 +24,6 @@ const Card = ({ id, video }) => {
     fetchChannel();
   }, [video?.userId]);
 
-  console.log(video?.imgUrl);
   return (
     <>
       <div className="relative flex w-full  max-w-[26rem] h-[21.5rem]  flex-col rounded-xl bg-white md:my-4 bg-clip-border text-gray-700  ">
