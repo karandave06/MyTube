@@ -123,7 +123,7 @@ const Navbar = () => {
         <div className="flex items-center gap-5  w-[33%]  md:py-1">
           <div
             onClick={handleToggle}
-            className="transition-all delay-10 cursor-pointer md:text-2xl text-md hover:bg-gray-200 p-2 rounded-full text-center  "
+            className="transition-all delay-10 cursor-pointer md:text-2xl text-xl hover:bg-gray-200 p-2 rounded-full text-center  "
           >
             <RxHamburgerMenu />
           </div>
@@ -131,8 +131,8 @@ const Navbar = () => {
 
         <div className="w-[33%]  ">
           <Link to={"/"}>
-            <div className="  flex items-center justify-center w-full md:gap-1 gap-2">
-              <div className="md:w-8 md:h-8 w-4 h-5">
+            <div className="  flex items-center justify-center md:w-full w-[8rem] md:gap-1 gap-2">
+              <div className="md:w-8 md:h-8 sm:w-4 sm:h-5 w-5 h-5 ">
                 <img
                   className="w-full h-full object-cover"
                   src={logo}
@@ -147,7 +147,7 @@ const Navbar = () => {
         </div>
 
         <div className="w-[33%] flex items-center gap-3 px-2 justify-end text-end  py-1">
-          <CiSearch />
+          <CiSearch className="text-xl"/>
           <AvatarDropdown />
         </div>
       </div>

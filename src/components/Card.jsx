@@ -5,10 +5,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { format } from "timeago.js";
+import placeholder from "../../public/images/placeholder.png";
 
 const Card = ({ id, video }) => {
   const [channel, Setchannel] = useState();
+  const [imageLoad, setimageLoad] = useState(true);
 
+  // useEffect(() => {
+  //   setimageLoad(true);
+  // }, []);
+  console.log(imageLoad, 17);
   useEffect(() => {
     const fetchChannel = async () => {
       const res = axios.get(
@@ -19,6 +25,7 @@ const Card = ({ id, video }) => {
     fetchChannel();
   }, [video?.userId]);
 
+  console.log(video?.imgUrl);
   return (
     <>
       <div className="relative flex w-full  max-w-[26rem] h-[21.5rem]  flex-col rounded-xl bg-white md:my-4 bg-clip-border text-gray-700  ">
@@ -30,10 +37,25 @@ const Card = ({ id, video }) => {
           bg-blue-gray-500 bg-clip-border w-full h-[17rem] flex-[0.8]"
           >
             <img
-              src={video?.imgUrl}
+              src={ imageLoad ? placeholder : video?.imgUrl}
               alt="ui/ux review check"
-              className=" h-full w-full "
+              className=" h-full w-full"
+              onLoad={() => setimageLoad(false)}
             />
+            {/* {imageLoad ? (
+              <img
+                src={placeholder}
+                alt="ui/ux review check"
+                className=" h-full w-full "
+              />  
+            ) : (
+              <img
+                src={video?.imgUrl}
+                alt="ui/ux review check"
+                className=" h-full w-full"
+                onLoad={() => setimageLoad(false)}
+              />
+            )} */}
             {/* <div className="absolute inset-0 w-full h-full to-bg-black-10 bg-gradient-to-tr from-transparent via-transparent to-black/60"></div> */}
           </div>
         </Link>

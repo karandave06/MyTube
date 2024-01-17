@@ -55,6 +55,7 @@ const Signin = () => {
   return (
     <>
       <div className="w-[100%] h-[100vh] flex justify-center items-center md:p-0 p-5">
+      
         <div
           className=" bg-white md:h-[28rem]  md:w-[30rem] h-[29rem] w-[28rem]
           
