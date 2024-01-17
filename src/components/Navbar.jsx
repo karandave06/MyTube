@@ -60,7 +60,11 @@ const Navbar = () => {
   const token = useSelector((state) => state.user.current);
   const VideoPopup = useSelector((state) => state.popupVideo.Popupvalue);
 
-  console.log(VideoPopup, 64);
+  const [search, setSearch] = useState(false);
+
+  const toggleSearch = () => {
+    setSearch(!search);
+  };
 
   const dispatch = useDispatch();
 
@@ -72,7 +76,7 @@ const Navbar = () => {
     <>
       <div
         className="w-full h-[2rem] py-8 sticky top-0 left-0
-      hidden md:flex p-5 items-center justify-between z-[99] bg-white "
+      hidden md:flex p-5 items-center justify-between z-[98] bg-white "
       >
         <div className="flex items-center gap-5 justify-start md:flex-[0.2] flex-[0.1]  py-1">
           <div
@@ -108,8 +112,6 @@ const Navbar = () => {
         {VideoPopup && <Upload />}
       </div>
 
-      {/* Responsive Navbar */}
-
       <div
         className="w-full h-[2rem] py-8 sticky top-0 left-0
       flex md:hidden md:p-5 p-2 items-center justify-between z-[99] bg-white "
@@ -141,7 +143,7 @@ const Navbar = () => {
         </div>
 
         <div className="w-[33%] flex items-center gap-3 px-2 justify-end text-end  py-1">
-          <CiSearch className="text-xl" />
+          {/* <CiSearch className="text-xl cursor-pointer" onClick={toggleSearch} /> */}
           <AvatarDropdown />
         </div>
       </div>

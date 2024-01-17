@@ -10,15 +10,15 @@ const Search = () => {
     setQ(e);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log();
+  function handleSubmit(e) {
+    if (e.key === 'Enter') e.preventDefault();
+    e.preventDefault()
     navigate(`/search?q=${q}`);
-  };
+  }
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="relative max-w-full  flex items-center justify-between">
           <input
             onChange={(e) => handleChange(e.target.value)}

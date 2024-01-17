@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Upload = () => {
-  const UserId = useSelector((state) => state.user.current) 
+  const UserId = useSelector((state) => state.user.current);
   const [showModal, setShowModal] = useState(true);
   const VideoPopup = useSelector((state) => state.popupVideo.Popupvalue);
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const Upload = () => {
       (snapshot) => {
         const percent = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        ); 
+        );
         setvideoper(percent);
       },
       (err) => console.log(err),
@@ -77,13 +77,6 @@ const Upload = () => {
   console.log(videoper, "videoper ");
   console.log(imageper, "imageper ");
 
-
-
-
-
-
-
-  
   const handleChange = (e) => {
     console.log("cliking is continue");
   };
@@ -91,31 +84,28 @@ const Upload = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-     
-
- await axios.post(`${import.meta.env.VITE_SOME_KEY}/video`,{
-  token:UserId.other._id,
-  imgUrl:imgUrl,
-  videoUrl:videoUrl,
-  title:data.title,
-  desc:data.desc,
-  tags:data.tags
- }).then((res) =>{
- dispatch(popState())
- navigate(`/video/${res.videoUrl}`);
-
-})
- .catch((err) => console.log(err))
-
-
+    await axios
+      .post(`${import.meta.env.VITE_SOME_KEY}/video`, {
+        token: UserId.other._id,
+        imgUrl: imgUrl,
+        videoUrl: videoUrl,
+        title: data.title,
+        desc: data.desc,
+        tags: data.tags,
+      })
+      .then((res) => {
+        dispatch(popState());
+        navigate(`/video/${res.videoUrl}`);
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     video && uploadFile(video);
   }, [video]);
 
-  console.log(video && video)
-  console.log(image)
+  console.log(video && video);
+  console.log(image);
 
   useEffect(() => {
     image && uploadImage(image);
@@ -155,7 +145,6 @@ const Upload = () => {
                         "Uploading" + videoper + "%"
                       ) : (
                         <input
-                          
                           onChange={(e) => {
                             setvideo(e.target.files[0]);
                           }}
@@ -165,7 +154,7 @@ const Upload = () => {
                           placeholder="Video Tital"
                         />
                       )}
-                    </div> 
+                    </div>
 
                     <div className="w-full">
                       <input

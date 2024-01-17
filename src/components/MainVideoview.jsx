@@ -21,6 +21,7 @@ import { IoMdArrowDropup } from "react-icons/io";
 import ReactPlayer from "react-player";
 import { Media, Video } from "@vidstack/player-react";
 import Recomandation from "./Recomandation";
+import {useNavigate,useHistory } from 'react-router-dom'
 
 const MainVideoview = () => {
   const { register, handleSubmit, resetField } = useForm();
@@ -55,8 +56,11 @@ const MainVideoview = () => {
   const [channel, setchannel] = useState({});
   const dispatch = useDispatch();
   const path = useLocation().pathname.split("/")[2];
+  const navigate = useNavigate();
+
 
   const handleLike = async () => {
+    !currentUser && navigate("/signin")
     await axios.put(
       `${import.meta.env.VITE_SOME_KEY}/user/like2/${currentVideo?._id}`,
       {
@@ -66,7 +70,10 @@ const MainVideoview = () => {
     dispatch(like(currentUser?.other._id));
   };
 
+  
+
   const handleDislike = async () => {
+    !currentUser && navigate("/signin")
     await axios.put(
       `${import.meta.env.VITE_SOME_KEY}/user/dislike2/${currentVideo?._id}`,
       {
@@ -77,6 +84,7 @@ const MainVideoview = () => {
   };
 
   const handleSuscribe = async () => {
+    !currentUser && navigate("/signin")
     currentUser.suscribedUsers?.includes(channel._id)
       ? await axios.put(
           `${import.meta.env.VITE_SOME_KEY}/user/unsub/${channel._id}`,
