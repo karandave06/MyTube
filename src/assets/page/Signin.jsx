@@ -5,11 +5,11 @@ import { loginStart, loginSuscess, loginFailure } from "../../Redux/UserSlice";
 import { useDispatch } from "react-redux";
 import { auth, provider } from "../../../src/firebase.js";
 import { signInWithPopup, signInWithRedirect } from "firebase/auth";
-import {useHistory } from 'react-router-dom'
+// import {useHistory } from 'react-router-dom'
 import axios from "axios";
-
+  
 const Signin = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const singWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {

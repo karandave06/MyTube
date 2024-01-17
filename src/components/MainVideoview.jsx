@@ -21,7 +21,7 @@ import { IoMdArrowDropup } from "react-icons/io";
 import ReactPlayer from "react-player";
 import { Media, Video } from "@vidstack/player-react";
 import Recomandation from "./Recomandation";
-import {useNavigate,useHistory } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
 
 const MainVideoview = () => {
   const { register, handleSubmit, resetField } = useForm();
