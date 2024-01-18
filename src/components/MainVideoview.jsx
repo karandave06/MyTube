@@ -21,11 +21,13 @@ import { IoMdArrowDropup } from "react-icons/io";
 import ReactPlayer from "react-player";
 import { Media, Video } from "@vidstack/player-react";
 import Recomandation from "./Recomandation";
-import {useNavigate } from 'react-router-dom'
-
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const MainVideoview = () => {
   const { register, handleSubmit, resetField } = useForm();
   const currentVideo = useSelector((state) => state.video.currentVideo);
+  const currentUser = useSelector((state) => state.user.current);
   const onSubmit = async () => {
     await axios
       .post(`${import.meta.env.VITE_SOME_KEY}/comment`, {
@@ -47,7 +49,6 @@ const MainVideoview = () => {
       .catch((err) => console.log(err));
   };
 
-  const currentUser = useSelector((state) => state.user.current);
   const [commentLine, setcommentLine] = useState(false);
   const [showSubmint, setshowSubmint] = useState(false);
   const [showComment, setshowComment] = useState(false);
@@ -58,9 +59,10 @@ const MainVideoview = () => {
   const path = useLocation().pathname.split("/")[2];
   const navigate = useNavigate();
 
+  console.log(currentUser, 50);
 
   const handleLike = async () => {
-    !currentUser && navigate("/signin")
+    !currentUser && navigate("/signin");
     await axios.put(
       `${import.meta.env.VITE_SOME_KEY}/user/like2/${currentVideo?._id}`,
       {
@@ -70,10 +72,8 @@ const MainVideoview = () => {
     dispatch(like(currentUser?.other._id));
   };
 
-  
-
   const handleDislike = async () => {
-    !currentUser && navigate("/signin")
+    !currentUser && navigate("/signin");
     await axios.put(
       `${import.meta.env.VITE_SOME_KEY}/user/dislike2/${currentVideo?._id}`,
       {
@@ -82,16 +82,26 @@ const MainVideoview = () => {
     );
     dispatch(dislike(currentUser?.other._id));
   };
-
+  console.log(channel?._id, 88);
+  console.log(
+    currentUser.suscribedUsers?.includes(channel._id)
+      ? "unsuscribe"
+      : "suscribe"
+  );
   const handleSuscribe = async () => {
-    !currentUser && navigate("/signin")
+    !currentUser && navigate("/signin");
     currentUser.suscribedUsers?.includes(channel._id)
       ? await axios.put(
           `${import.meta.env.VITE_SOME_KEY}/user/unsub/${channel._id}`,
           {
             token: currentUser?.other._id,
           }
-        )
+        ).then((res) => {
+        
+      toast.success("Success Notification !", {
+        position: "top-right"
+      });
+        })
       : await axios.put(
           `${import.meta.env.VITE_SOME_KEY}/user/sub/${channel._id}`,
           {
@@ -224,9 +234,10 @@ const MainVideoview = () => {
                     className="w-24 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300"
                   >
                     {currentUser?.suscribedUsers?.includes(channel._id)
-                      ? "Suscribed"
+                      ? "UnSuscibe"
                       : "Suscibe"}
                   </button>
+                   <ToastContainer />
                 </div>
               </div>
             </div>
@@ -329,16 +340,8 @@ const MainVideoview = () => {
         </div>
 
         <div className=" w-full grid-cols-1 gap-2 h-full">
-        <Recomandation tags={currentVideo?.tags} />
-          {/* <div className="w-full h-full flex flex-col gap-5">
-            <SideVideo
-              image={image}
-              videoTitle={
-                " video name is hear Lorem, ipsum dolor sit amet consectetur  adipisicing elit. Repellat eos quo maiores?"
-              }
-              ChennalName={"Chennal name is going to hear"}
-            /> 
-          </div> */}
+          <Recomandation tags={currentVideo?.tags} />
+           
         </div>
       </div>
     </>

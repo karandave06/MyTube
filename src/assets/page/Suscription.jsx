@@ -18,10 +18,11 @@ const Suscription = () => {
         setVideo(res.data);
       });
   }, []);
-console.log(video)
+
+  console.log(video.length,22);
   return (
     <>
-      {video > 0 ? (
+      {video.length > 0 ? (
         <div className="md:w-[calc(100%-4rem)] w-full grid  py-5  md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2 p-4 ml-auto  h-full">
           {video &&
             video.map((res) => <Card key={res._id} video={res} id={res._id} />)}

@@ -12,6 +12,7 @@ import { CiSearch } from "react-icons/ci";
 import AvatarDropdown from "./AvatarDropdown.jsx";
 import Upload from "./Upload.jsx";
 import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
 
 export const BeforeSign = () => {
   return (
@@ -70,6 +71,7 @@ const Navbar = () => {
 
   const handleToggle = () => {
     dispatch(toggleState());
+   
   };
 
   return (

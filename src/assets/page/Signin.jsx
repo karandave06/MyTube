@@ -4,12 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginStart, loginSuscess, loginFailure } from "../../Redux/UserSlice";
 import { useDispatch } from "react-redux";
 import { auth, provider } from "../../../src/firebase.js";
-import { signInWithPopup, signInWithRedirect } from "firebase/auth";
-// import {useHistory } from 'react-router-dom'
+import { signInWithPopup, signInWithRedirect } from "firebase/auth"; 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-  
+import { useState } from "react";
+
 const Signin = () => {
   // const navigate = useNavigate();
+ 
+
+
+
+  // google auth
+
+
   const singWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -22,14 +31,21 @@ const Signin = () => {
           })
           .then((res) => {
             dispatch(loginSuscess(res.data));
-            navigate("/")
+            navigate("/");
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+          
+           console.log(error.response.data,1)
+          });
       })
       .catch((error) => {
+       
         dispatch(loginFailure());
+        console.log(error.response.data,2)
       });
   };
+
+ 
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -41,23 +57,26 @@ const Signin = () => {
         email: data.email,
         name: data.name,
         password: data.password,
-      })
-
-      .then(async (res) => {
+      }).then(async (res) => {
         if (res.status == 200) {
-          await localStorage.setItem("token", res.data.token);
-          dispatch(loginSuscess(res.data));
+           toast.success(`Login Successfull !`, {
+            position: "top-right"
+          }); 
+          dispatch(loginSuscess(res.data)); 
           await navigate("/");
         }
       })
       .catch((error) => {
+        toast.error(`${error && error?.response?.data} !`, {
+          position: "top-right"
+        });
+       
         dispatch(loginFailure(error));
       });
   };
   return (
     <>
       <div className="w-[100%] h-[100vh] flex justify-center items-center md:p-0 p-5">
-      
         <div
           className=" bg-white md:h-[28rem]  md:w-[30rem] h-[29rem] w-[28rem]
           
@@ -135,6 +154,7 @@ border-[1px] border-transparent hover:border-black
               >
                 Next
               </button>
+              <ToastContainer />
             </div>
             <div className="text-center w-full">OR</div>
           </form>
