@@ -95,7 +95,8 @@ const Upload = () => {
       })
       .then((res) => {
         dispatch(popState());
-        navigate(`/video/${res.videoUrl}`);
+        window.location.reload();
+        // navigate(`/video/${res.videoUrl}`);
       })
       .catch((err) => console.log(err));
   };
