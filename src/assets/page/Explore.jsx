@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Card from "./Card";
+import Navbar from "../../components/Navbar";
+import Sidebar from "../../components/Sidebar";
 import axios from "axios";
+import Card from "../../components/Card";
 
 const Placeholder = () => {
   return (
     <div
       role="status"
       className="max-w-sm p-4 border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-600
-       
-      "
+         
+        "
     >
       <div className="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded dark:bg-gray-600">
         <svg
@@ -46,28 +48,25 @@ const Placeholder = () => {
   );
 };
 
-const MainView = () => {
-  const [videos, Setvideos] = useState();
+const Explore = () => {
+  const [video, setVideo] = useState([]);
   const [data, setData] = useState(true);
-  useEffect(() => {
-    const fatchVideos = async () => {
-      const res = axios
-        .get(`${import.meta.env.VITE_SOME_KEY}/video/random`)
-        .then(async (res) => {
-          Setvideos((await res).data);
-          setData(false);
-        });
-    };
-    fatchVideos();
-  }, []);
+  //   const current = useSelector((state) => state.user.current);
 
-  
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_SOME_KEY}/video/trand`).then((res) => {
+      setVideo(res.data);
+      setData(false);
+    });
+  }, []);
   return (
     <>
+    <Navbar />
+    <Sidebar />
       {data ? (
         <div
           className="md:w-[calc(100%-4rem)] w-full grid 
-       py-5  md:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-5 gap-8 p-4 ml-auto  h-full"
+     py-5  md:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-5 gap-8 p-4 ml-auto  h-full"
         >
           <Placeholder />
           <Placeholder />
@@ -81,9 +80,9 @@ const MainView = () => {
       ) : (
         <div
           className="md:w-[calc(100%-4rem)] w-full grid 
-       py-5  md:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-5 gap-8 p-4 ml-auto  h-full"
+     py-5  md:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-5 gap-8 p-4 ml-auto  h-full"
         >
-          {videos?.map((index) => (
+          {video?.map((index) => (
             <Card id={index._id} key={index._id} video={index} />
           ))}
         </div>
@@ -92,4 +91,4 @@ const MainView = () => {
   );
 };
 
-export default MainView;
+export default Explore;

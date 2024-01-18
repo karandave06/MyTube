@@ -11,9 +11,7 @@ const Card = ({ id, video }) => {
   const [channel, Setchannel] = useState();
   const [imageLoad, setimageLoad] = useState(true);
 
-  // useEffect(() => {
-  //   setimageLoad(true);
-  // }, []);
+ 
   useEffect(() => {
     const fetchChannel = async () => {
       const res = axios.get(

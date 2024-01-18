@@ -6,6 +6,7 @@ import DefaultPage from "./assets/page/DefaultPage";
 import Video from "./assets/page/Video";
 import { useEffect, useState } from "react";
 import Search from "./assets/page/Search";
+import Explore from "./assets/page/Explore";
 
 function App() { 
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/video/:id" element={<Video />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/explore" element={<Explore />} />
       </Routes>
     </>
   );

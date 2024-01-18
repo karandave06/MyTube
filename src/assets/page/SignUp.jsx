@@ -2,17 +2,17 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import google from "../../../public/images/google.png";
 import { Link, useNavigate } from "react-router-dom";
- 
+
 import axios from "axios";
 
 const SignUp = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
     // data.preventDefault();
-  
+
     axios
       .post(`${import.meta.env.VITE_SOME_KEY}/auth/signup`, {
         email: data.email,
@@ -21,11 +21,12 @@ const SignUp = () => {
       })
       .then((res) => {
         if (res.status == 200) {
-        
-          // navigate("/signin");
+          navigate("/signin");
         }
       })
-      .catch((error) => {console.log(error)});
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <>

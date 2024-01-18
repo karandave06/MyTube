@@ -56,10 +56,9 @@ const MainVideoview = () => {
   const [descComment, setdescComment] = useState([]);
   const [channel, setchannel] = useState({});
   const dispatch = useDispatch();
+  const [videoViews, setvideoViews] = useState(false);
   const path = useLocation().pathname.split("/")[2];
   const navigate = useNavigate();
-
-  console.log(currentUser, 50);
 
   const handleLike = async () => {
     !currentUser && navigate("/signin");
@@ -84,24 +83,22 @@ const MainVideoview = () => {
   };
   console.log(channel?._id, 88);
   console.log(
-    currentUser.suscribedUsers?.includes(channel._id)
+    currentUser?.suscribedUsers?.includes(channel._id)
       ? "unsuscribe"
       : "suscribe"
   );
   const handleSuscribe = async () => {
     !currentUser && navigate("/signin");
-    currentUser.suscribedUsers?.includes(channel._id)
-      ? await axios.put(
-          `${import.meta.env.VITE_SOME_KEY}/user/unsub/${channel._id}`,
-          {
+    currentUser?.suscribedUsers?.includes(channel._id)
+      ? await axios
+          .put(`${import.meta.env.VITE_SOME_KEY}/user/unsub/${channel._id}`, {
             token: currentUser?.other._id,
-          }
-        ).then((res) => {
-        
-      toast.success("Success Notification !", {
-        position: "top-right"
-      });
-        })
+          })
+          .then((res) => {
+            toast.success("Success Notification !", {
+              position: "top-right",
+            });
+          })
       : await axios.put(
           `${import.meta.env.VITE_SOME_KEY}/user/sub/${channel._id}`,
           {
@@ -120,7 +117,7 @@ const MainVideoview = () => {
         const videoRes = await axios.get(
           `${import.meta.env.VITE_SOME_KEY}/video/find/${path}`
         );
-        console.log(videoRes.data);
+
         const userRes = await axios.get(
           `${import.meta.env.VITE_SOME_KEY}/user/find/${videoRes.data.userId}`
         );
@@ -134,7 +131,14 @@ const MainVideoview = () => {
       }
     };
     getData();
-  }, []);
+  }, [videoViews]);
+
+  useEffect(() => {
+    axios
+      .put(`${import.meta.env.VITE_SOME_KEY}/video/view/${path}`)
+      .then((res) => setvideoViews(true))
+      .catch((err) => console.log(err));
+  }, [path]);
 
   useEffect(() => {
     axios
@@ -145,7 +149,6 @@ const MainVideoview = () => {
       .catch((err) => console.log(err));
   }, [currentVideo?._id]);
 
-  console.log(imageUrl);
   return (
     <>
       <div className="md:w-[calc(100%-4rem)] w-full grid  py-5 md:grid-cols-2 grid-cols-1  gap-5 p-4 ml-auto  h-full">
@@ -203,31 +206,34 @@ const MainVideoview = () => {
                     </div>
                     <h1 className="text-xl">{channel.name} </h1>
                   </div>
-                  <div>{currentVideo?.videoViews}</div>
+                  <div className="bg-gray-200 p-1 px-1 rounded-full">
+                    {currentVideo?.videoViews} views
+                  </div>
                 </div>
 
                 <div className="flex gap-2 md:w-[50%]">
                   <button
                     onClick={handleLike}
-                    className="flex w-10 h-10 items-center justify-center rounded-full hover:bg-gray-200 text-xl"
+                    className="flex md:w-10 md:h-10 h-14 w-12  items-center justify-center md:flex-row flex-col rounded-full hover:bg-gray-200 text-xl"
                   >
                     {currentVideo?.likes?.includes(currentUser?.other._id) ? (
                       <AiFillLike />
                     ) : (
                       <AiOutlineLike />
                     )}
-                    {/* <SlLike /> */}
+
+                    <h1>{currentVideo?.likes.length}</h1>
                   </button>
                   <button
                     onClick={handleDislike}
-                    className="flex w-10 h-10 items-center justify-center rounded-full hover:bg-gray-200 text-xl"
+                    className="flex md:w-10 md:h-10 h-14 w-12 md:flex-row flex-col items-center justify-center rounded-full hover:bg-gray-200 text-xl"
                   >
                     {currentVideo?.dislike?.includes(currentUser?.other._id) ? (
                       <AiFillDislike />
                     ) : (
                       <AiOutlineDislike />
                     )}
-                    {/* <SlDislike /> */}
+                    <h1>{currentVideo?.dislike.length}</h1>
                   </button>
                   <button
                     onClick={handleSuscribe}
@@ -237,7 +243,7 @@ const MainVideoview = () => {
                       ? "UnSuscibe"
                       : "Suscibe"}
                   </button>
-                   <ToastContainer />
+                  <ToastContainer />
                 </div>
               </div>
             </div>
@@ -341,7 +347,6 @@ const MainVideoview = () => {
 
         <div className=" w-full grid-cols-1 gap-2 h-full">
           <Recomandation tags={currentVideo?.tags} />
-           
         </div>
       </div>
     </>
